@@ -53,3 +53,5 @@ Runs on `http://localhost:5173`, proxies `/api` to the backend.
 - PDF export of reports
 - Real JSX/Vue component rendering via a lightweight build step
 - Scheduled re-scans with regression tracking
+
+<!-- redeploy trigger 2026-07-09T05:05:22Z -->
