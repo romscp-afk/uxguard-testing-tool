@@ -1,0 +1,25 @@
+{
+  "name": "uxguard-server",
+  "version": "1.0.0",
+  "description": "UXGuard AI backend - accessibility and UX scanning engine",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "puppeteer": "^22.15.0",
+    "axe-core": "^4.10.0",
+    "jsdom": "^24.1.1",
+    "@anthropic-ai/sdk": "^0.27.0",
+    "multer": "^1.4.5-lts.1",
+    "express-rate-limit": "^7.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
