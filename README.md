@@ -10,37 +10,46 @@ Accessibility + UX validation platform. Scan a live URL or paste/upload code and
 
 ```
 uxguard-testing-tool/
-├── server/          Express backend — scanning engine, scoring, API
+├── api/             Vercel serverless functions (production API)
+│   ├── scan-url.js       POST — analyze a live URL
+│   ├── analyze-code.js   POST — analyze pasted/uploaded code
+│   └── health.js
+├── lib/             Shared analysis engine used by the api/ functions
+│   ├── analyzers/   accessibility (axe-core + serverless Chromium), UX heuristics, AI review
+│   └── utils/       scoring engine
+├── client/          React + Vite frontend
 │   └── src/
-│       ├── analyzers/   accessibility (axe-core + puppeteer), UX heuristics, AI review
-│       ├── routes/      /api/scan-url, /api/analyze-code
-│       └── utils/       scoring engine
-└── client/          React + Vite frontend
-    └── src/
-        ├── pages/       Home, URL Scan, Code Analysis
-        ├── components/  Navbar, ScoreCard, IssueList
-        └── styles/       design tokens (dark + #FF6B00 accent theme)
+│       ├── pages/       Home, URL Scan, Code Analysis
+│       ├── components/  Navbar, ScoreCard, IssueList
+│       └── styles/       design tokens (dark + teal accent theme)
+├── server/          Standalone Express version (optional — for local dev
+│                    without Vercel, or if you prefer deploying to
+│                    Render/Railway instead of Vercel serverless)
+└── vercel.json      Monorepo build config (client + api together)
 ```
 
-## Setup
+This project is set up to deploy as a **single Vercel project**: the `client/` folder builds as the static frontend, and `api/` becomes serverless functions automatically. Accessibility scanning uses `@sparticuz/chromium` + `puppeteer-core`, a Chromium build made specifically for serverless environments.
 
-### Backend
+## Deploying to Vercel
+
+1. Import this repo into Vercel
+2. **Root Directory**: leave as the repo root (not `client`) — `vercel.json` handles routing both the frontend build and the `api/` functions
+3. Add environment variable `ANTHROPIC_API_KEY` (optional — enables the AI review pass; everything else works without it)
+4. Deploy
+
+## Local development (optional, via the standalone server/)
+
 ```bash
 cd server
 npm install
-cp .env.example .env
-# add your ANTHROPIC_API_KEY to .env for AI review (optional — rest works without it)
-npm run dev
+cp .env.example .env   # add ANTHROPIC_API_KEY if desired
+npm run dev             # runs on http://localhost:4000
 ```
-Runs on `http://localhost:4000`.
-
-### Frontend
 ```bash
 cd client
 npm install
-npm run dev
+npm run dev             # runs on http://localhost:5173, proxies /api to the backend above
 ```
-Runs on `http://localhost:5173`, proxies `/api` to the backend.
 
 ## Notes on v1 scope
 

@@ -16,18 +16,19 @@ export default function CodePage() {
     setError(null);
     setReport(null);
     try {
-      let res;
+      let payload;
       if (mode === "upload" && file) {
-        const formData = new FormData();
-        formData.append("file", file);
-        res = await fetch("/api/analyze-code", { method: "POST", body: formData });
+        const text = await file.text();
+        payload = { code: text, filename: file.name };
       } else {
-        res = await fetch("/api/analyze-code", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ code })
-        });
+        payload = { code, filename: "pasted-code.html" };
       }
+
+      const res = await fetch("/api/analyze-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Analysis failed");
       setReport(data);

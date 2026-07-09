@@ -1,0 +1,14 @@
+{
+  "name": "uxguard-testing-tool",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "UXGuard AI - serverless API functions (Vercel) for the testing tool",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.0",
+    "@sparticuz/chromium": "^123.0.1",
+    "axe-core": "^4.10.0",
+    "jsdom": "^24.1.1",
+    "puppeteer-core": "^22.15.0"
+  }
+}
